@@ -10,9 +10,10 @@ function combineAggregationsFromResponses(responses) {
   }, {});
 }
 
-// To calculate a disjunctive facet correctly, you need to calculate the facet counts as if the filter was
-// not applied. If you did not do this, list of facet values would collapse to just one value, which is
-// whatever you have filtered on in that facet.
+// To calculate a disjunctive facet correctly, you need to calculate the facet
+// counts as if the filter was not applied. If you did not do this, list of
+// facet values would collapse to just one value, which is whatever you have
+// filtered on in that facet.
 function removeFilterByName(state, facetName) {
   return {
     ...state,
@@ -38,8 +39,9 @@ function changeSizeToZero(body) {
 
 async function getDisjunctiveFacetCounts(state, disunctiveFacetNames) {
   const responses = await Promise.all(
-    // Note that this could be optimized by *not* executing a request
-    // if not filter is currently applied for that field. Kept simple here for clarity.
+    // Note that this could be optimized by *not* executing a request if not
+    // filter is currently applied for that field. Kept simple here for
+    // clarity.
     disunctiveFacetNames.map((facetName) => {
       let newState = removeFilterByName(state, facetName);
       let body = buildRequest(newState);
