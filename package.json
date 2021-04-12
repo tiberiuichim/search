@@ -147,9 +147,13 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-export-default-from"
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-export-default-from": "^7.12.13",
     "eslint": "^7.24.0",
     "eslint-cli": "^1.1.1",
     "eslint-config-prettier": "^8.1.0",
