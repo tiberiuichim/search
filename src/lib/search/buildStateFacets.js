@@ -53,11 +53,14 @@ export default function buildStateFacets(aggregations) {
   const visitors = getRangeFacet(aggregations, 'visitors');
   const acres = getRangeFacet(aggregations, 'acres');
 
+  const Country = getValueFacet(aggregations, 'Country');
+
   const facets = {
-    ...(states && { states }),
-    ...(world_heritage_site && { world_heritage_site }),
-    ...(visitors && { visitors }),
-    ...(acres && { acres }),
+    ...Country,
+    // ...(states && { states }),
+    // ...(world_heritage_site && { world_heritage_site }),
+    // ...(visitors && { visitors }),
+    // ...(acres && { acres }),
   };
 
   if (Object.keys(facets).length > 0) {

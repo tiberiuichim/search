@@ -22,39 +22,47 @@ import {
   buildState,
 } from './lib/search';
 
-const config = {
-  debug: true,
-  hasA11yNotifications: true,
-  onResultClick: () => {
-    /* Not implemented */
-  },
-  onAutocompleteResultClick: () => {
-    /* Not implemented */
-  },
-  onAutocomplete: async ({ searchTerm }) => {
-    const requestBody = buildRequest({ searchTerm });
-    const json = await runRequest(requestBody);
-    const state = buildState(json);
-    return {
-      autocompletedResults: state.results,
-    };
-  },
-  onSearch: async (state) => {
-    const { resultsPerPage } = state;
-    const requestBody = buildRequest(state);
-    // Note that this could be optimized by running all of these requests
-    // at the same time. Kept simple here for clarity.
-    const responseJson = await runRequest(requestBody);
-    const responseJsonWithDisjunctiveFacetCounts = await applyDisjunctiveFaceting(
-      responseJson,
-      state,
-      ['visitors', 'states'],
-    );
-    return buildState(responseJsonWithDisjunctiveFacetCounts, resultsPerPage);
-  },
-};
-
 export default function App() {
+  const config = React.useMemo(() => {
+    return {
+      debug: true,
+      hasA11yNotifications: true,
+      onResultClick: () => {
+        /* Not implemented */
+      },
+      onAutocompleteResultClick: () => {
+        /* Not implemented */
+      },
+      onAutocomplete: async ({ searchTerm }) => {
+        const requestBody = buildRequest({ searchTerm });
+        const json = await runRequest(requestBody);
+        const state = buildState(json);
+        return {
+          autocompletedResults: state.results,
+        };
+      },
+      onSearch: async (state) => {
+        const { resultsPerPage } = state;
+        const requestBody = buildRequest(state);
+        // Note that this could be optimized by running all of these requests
+        // at the same time. Kept simple here for clarity.
+        const responseJson = await runRequest(requestBody);
+        const { body } = responseJson;
+        console.log('responseJson', body);
+        const responseJsonWithDisjunctiveFacetCounts = await applyDisjunctiveFaceting(
+          body,
+          state,
+          ['Country'],
+        );
+        console.log('disj', responseJsonWithDisjunctiveFacetCounts);
+
+        return buildState(
+          responseJsonWithDisjunctiveFacetCounts,
+          resultsPerPage,
+        );
+      },
+    };
+  }, []);
   return (
     <SearchProvider config={config}>
       <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
@@ -65,14 +73,6 @@ export default function App() {
                 header={
                   <SearchBox
                     autocompleteMinimumCharacters={3}
-                    autocompleteResults={{
-                      linkTarget: '_blank',
-                      sectionTitle: 'Results',
-                      titleField: 'title',
-                      urlField: 'nps_link',
-                      shouldTrackClickThrough: true,
-                      clickThroughTags: ['test'],
-                    }}
                     autocompleteSuggestions={true}
                   />
                 }
@@ -96,34 +96,35 @@ export default function App() {
                       />
                     )}
                     <Facet
-                      field="states"
-                      label="States"
+                      field="Country"
+                      label="Country"
                       filterType="any"
                       isFilterable={true}
                     />
-                    <Facet
-                      field="world_heritage_site"
-                      label="World Heritage Site?"
-                    />
-                    <Facet field="visitors" label="Visitors" filterType="any" />
-                    <Facet
-                      field="acres"
-                      label="Acres"
-                      view={SingleSelectFacet}
-                    />
+
+                    {/* <Facet */}
+                    {/*   field="world_heritage_site" */}
+                    {/*   label="World Heritage Site?" */}
+                    {/* /> */}
+                    {/* <Facet field="visitors" label="Visitors" filterType="any" /> */}
+                    {/* <Facet */}
+                    {/*   field="acres" */}
+                    {/*   label="Acres" */}
+                    {/*   view={SingleSelectFacet} */}
+                    {/* /> */}
                   </div>
                 }
                 bodyContent={
                   <Results
-                    titleField="title"
-                    urlField="nps_link"
+                    titleField="Country"
+                    urlField="CodeCatalogue"
                     shouldTrackClickThrough={true}
                   />
                 }
                 bodyHeader={
                   <React.Fragment>
-                    {wasSearched && <PagingInfo />}
-                    {wasSearched && <ResultsPerPage />}
+                    <PagingInfo />
+                    <ResultsPerPage />
                   </React.Fragment>
                 }
                 bodyFooter={<Paging />}
