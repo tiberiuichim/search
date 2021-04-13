@@ -15,69 +15,34 @@ import {
 } from '@elastic/react-search-ui';
 import { Layout, SingleSelectFacet } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
-
-import {
-  buildRequest,
-  runRequest,
-  applyDisjunctiveFaceting,
-  buildState,
-} from './lib/search';
+import config from './registry';
 
 const Item = (props) => {
   const { result } = props;
   console.log('item props', props);
   return (
     <div>
-      <h4>{result['Measure_name'].raw}</h4>
+      <h4>{result.Measure_name.raw}</h4>
+      <p>
+        <strong>Origin of measure:</strong>{' '}
+        <em>{result.Origin_of_the_measure.raw}</em>
+      </p>
+      <p>
+        <strong>MSFD Descriptor:</strong> <em>{result.Descriptors.raw}</em>
+      </p>
     </div>
   );
 };
 
 export default function App() {
-  const config = React.useMemo(() => {
-    return {
-      // debug: true,
-      hasA11yNotifications: true,
-      onResultClick: () => {
-        /* Not implemented */
-      },
-      onAutocompleteResultClick: () => {
-        /* Not implemented */
-      },
-      onAutocomplete: async (props) => {
-        // console.log('on autocomplete', props);
-        const { searchTerm } = props;
-        const resultsPerPage = 20;
-        const requestBody = buildRequest({ searchTerm });
-        const json = await runRequest(requestBody);
-        const state = buildState(json, resultsPerPage);
-        return {
-          autocompletedResults: state.results,
-        };
-      },
-      onSearch: async (state) => {
-        const { resultsPerPage } = state;
-        const requestBody = buildRequest(state);
-        // Note that this could be optimized by running all of these requests
-        // at the same time. Kept simple here for clarity.
-        const responseJson = await runRequest(requestBody);
-        const { body } = responseJson;
-        const responseJsonWithDisjunctiveFacetCounts = await applyDisjunctiveFaceting(
-          body,
-          state,
-          ['Country'],
-        );
+  const appName = 'default';
 
-        const newState = buildState(
-          responseJsonWithDisjunctiveFacetCounts,
-          resultsPerPage,
-        );
-        return newState;
-      },
-    };
+  const appConfig = React.useMemo(() => {
+    return config.searchui[appName].get();
   }, []);
+
   return (
-    <SearchProvider config={config}>
+    <SearchProvider config={appConfig}>
       <WithSearch mapContextToProps={(context) => context}>
         {(params) => <Search {...params} />}
       </WithSearch>
@@ -118,7 +83,7 @@ const Search = (props) => {
                     },
                     {
                       name: 'Title',
-                      value: 'Measure name',
+                      value: 'Measure_name',
                       direction: 'asc',
                     },
                   ]}

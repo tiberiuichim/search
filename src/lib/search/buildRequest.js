@@ -99,6 +99,7 @@ export default function buildRequest(state) {
       Spatial_scope: { terms: { field: 'Spatial_scope' } },
       Measure_Impacts_to: { terms: { field: 'Measure_Impacts_to' } },
       Descriptors: { terms: { field: 'Descriptors' } },
+
       // states: { terms: { field: 'states.keyword', size: 30 } },
       // world_heritage_site: {
       //   terms: { field: 'world_heritage_site' },
