@@ -126,7 +126,60 @@ const Search = (props) => {
                 isFilterable={true}
               />
               <Facet field="Country" label="Country" view={SingleSelectFacet} />
-
+              <Facet
+                field="Sector"
+                label="Sector"
+                filterType="any"
+                isFilterable={false}
+              />
+              <Facet
+                field="Use_or_activity"
+                label="Use or activity"
+                filterType="any"
+                isFilterable={false}
+              />
+              <Facet
+                field="Status"
+                label="Status"
+                filterType="any"
+                isFilterable={false}
+              />
+              <Facet
+                field="Origin_of_the_measure"
+                label="Origin of the measure"
+                filterType="any"
+                isFilterable={false}
+              />
+              <Facet
+                field="Nature_of_the_measure"
+                label="Nature of the measure"
+                filterType="any"
+                isFilterable={false}
+              />
+              <Facet
+                field="Water_body_category"
+                label="Water body category"
+                filterType="any"
+                isFilterable={false}
+              />
+              <Facet
+                field="Spatial_scope"
+                label="Spatial scope"
+                filterType="any"
+                isFilterable={false}
+              />
+              <Facet
+                field="Measure_Impacts_to"
+                label="Measure Impacts to"
+                filterType="any"
+                isFilterable={false}
+              />
+              <Facet
+                field="Descriptors"
+                label="Descriptors"
+                filterType="any"
+                isFilterable={false}
+              />
               {/* <Facet */}
               {/*   field="world_heritage_site" */}
               {/*   label="World Heritage Site?" */}

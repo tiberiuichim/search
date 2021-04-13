@@ -48,9 +48,36 @@ export default function buildStateFacets(aggregations) {
   // const visitors = getRangeFacet(aggregations, 'visitors');
 
   const Country = getValueFacet(aggregations, 'Country');
+  const Sector = getValueFacet(aggregations, 'Sector');
+  const Use_or_activity = getValueFacet(aggregations, 'Use or activity');
+  const Status = getValueFacet(aggregations, 'Status');
+  const Origin_of_the_measure = getValueFacet(
+    aggregations,
+    'Origin of the measure',
+  );
+  const Nature_of_the_measure = getValueFacet(
+    aggregations,
+    'Nature of the measure',
+  );
+  const Water_body_category = getValueFacet(
+    aggregations,
+    'Water body category',
+  );
+  const Spatial_scope = getValueFacet(aggregations, 'Spatial scope');
+  const Measure_Impacts_to = getValueFacet(aggregations, 'Measure Impacts to');
+  const Descriptors = getValueFacet(aggregations, 'Descriptors');
 
   const facets = {
     ...(Country && { Country }),
+    ...(Sector && { Sector }),
+    ...(Use_or_activity && { Use_or_activity }),
+    ...(Status && { Status }),
+    ...(Origin_of_the_measure && { Origin_of_the_measure }),
+    ...(Nature_of_the_measure && { Nature_of_the_measure }),
+    ...(Water_body_category && { Water_body_category }),
+    ...(Spatial_scope && { Spatial_scope }),
+    ...(Measure_Impacts_to && { Measure_Impacts_to }),
+    ...(Descriptors && { Descriptors }),
   };
 
   if (Object.keys(facets).length > 0) {

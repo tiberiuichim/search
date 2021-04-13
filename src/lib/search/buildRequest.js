@@ -71,9 +71,34 @@ export default function buildRequest(state) {
       },
     },
     //https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-source-filtering.html#search-request-source-filtering
-    _source: ['id', 'Country', 'CodeCatalogue'], // TODO: add all fields that are needed
+    _source: [
+      'id',
+      'CodeCatalogue',
+      'Sector',
+      'Use or activity',
+      'Measure name',
+      'Status',
+      'Origin of the measure',
+      'Nature of the measure',
+      'Water body category',
+      'Spatial scope',
+      'Country',
+      'Measure Impacts to',
+      'Measure Impacts to (further details)',
+      'Descriptors',
+    ],
+
     aggs: {
       Country: { terms: { field: 'Country' } },
+      Sector: { terms: { field: 'Sector' } },
+      'Use or activity': { terms: { field: 'Use or activity' } },
+      Status: { terms: { field: 'Status' } },
+      'Origin of the measure': { terms: { field: 'Origin of the measure' } },
+      'Nature of the measure': { terms: { field: 'Nature of the measure' } },
+      'Water body category': { terms: { field: 'Water body category' } },
+      'Spatial scope': { terms: { field: 'Spatial scope' } },
+      'Measure Impacts to': { terms: { field: 'Measure Impacts to' } },
+      Descriptors: { terms: { field: 'Descriptors' } },
       // states: { terms: { field: 'states.keyword', size: 30 } },
       // world_heritage_site: {
       //   terms: { field: 'world_heritage_site' },

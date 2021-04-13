@@ -67,7 +67,20 @@ export default function buildRequestFilter(filters) {
   if (!filters) return;
 
   filters = filters.reduce((acc, filter) => {
-    if (['Country'].includes(filter.field)) {
+    if (
+      [
+        'Country',
+        'Sector',
+        'Use or activity',
+        'Status',
+        'Origin of the measure',
+        'Nature of the measure',
+        'Water body category',
+        'Spatial scope',
+        'Measure Impacts to',
+        'Descriptors',
+      ].includes(filter.field)
+    ) {
       return [...acc, getTermFilter(filter)];
     }
     //
