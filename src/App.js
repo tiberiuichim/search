@@ -28,7 +28,7 @@ const Item = (props) => {
   console.log('item props', props);
   return (
     <div>
-      <h4>{result['Measure name'].raw}</h4>
+      <h4>{result['Measure_name'].raw}</h4>
     </div>
   );
 };

@@ -71,13 +71,13 @@ export default function buildRequestFilter(filters) {
       [
         'Country',
         'Sector',
-        'Use or activity',
+        'Use_or_activity',
         'Status',
-        'Origin of the measure',
-        'Nature of the measure',
-        'Water body category',
-        'Spatial scope',
-        'Measure Impacts to',
+        'Origin_of_the_measure',
+        'Nature_of_the_measure',
+        'Water_body_category',
+        'Spatial_scope',
+        'Measure_Impacts_to',
         'Descriptors',
       ].includes(filter.field)
     ) {

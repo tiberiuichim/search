@@ -49,22 +49,22 @@ export default function buildStateFacets(aggregations) {
 
   const Country = getValueFacet(aggregations, 'Country');
   const Sector = getValueFacet(aggregations, 'Sector');
-  const Use_or_activity = getValueFacet(aggregations, 'Use or activity');
+  const Use_or_activity = getValueFacet(aggregations, 'Use_or_activity');
   const Status = getValueFacet(aggregations, 'Status');
   const Origin_of_the_measure = getValueFacet(
     aggregations,
-    'Origin of the measure',
+    'Origin_of_the_measure',
   );
   const Nature_of_the_measure = getValueFacet(
     aggregations,
-    'Nature of the measure',
+    'Nature_of_the_measure',
   );
   const Water_body_category = getValueFacet(
     aggregations,
-    'Water body category',
+    'Water_body_category',
   );
-  const Spatial_scope = getValueFacet(aggregations, 'Spatial scope');
-  const Measure_Impacts_to = getValueFacet(aggregations, 'Measure Impacts to');
+  const Spatial_scope = getValueFacet(aggregations, 'Spatial_scope');
+  const Measure_Impacts_to = getValueFacet(aggregations, 'Measure_Impacts_to');
   const Descriptors = getValueFacet(aggregations, 'Descriptors');
 
   const facets = {
