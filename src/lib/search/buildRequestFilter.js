@@ -83,7 +83,7 @@ export default function buildRequestFilter(filters) {
     ) {
       return [...acc, getTermFilter(filter)];
     }
-    //
+
     // if (['acres', 'visitors'].includes(filter.field)) {
     //   return [...acc, getRangeFilter(filter)];
     // }

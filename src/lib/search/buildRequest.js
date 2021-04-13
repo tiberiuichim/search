@@ -7,7 +7,7 @@ function buildFrom(current, resultsPerPage) {
 
 function buildSort(sortDirection, sortField) {
   if (sortDirection && sortField) {
-    return [{ [`${sortField}.keyword`]: sortDirection }];
+    return [{ [`${sortField}`]: sortDirection }];
   }
 }
 

@@ -7,6 +7,7 @@ import {
   WithSearch,
   SearchBox,
   Results,
+  Result,
   PagingInfo,
   ResultsPerPage,
   Paging,
@@ -21,6 +22,16 @@ import {
   applyDisjunctiveFaceting,
   buildState,
 } from './lib/search';
+
+const Item = (props) => {
+  const { result } = props;
+  console.log('item props', props);
+  return (
+    <div>
+      <h4>{result['Measure name'].raw}</h4>
+    </div>
+  );
+};
 
 export default function App() {
   const config = React.useMemo(() => {
@@ -107,7 +118,7 @@ const Search = (props) => {
                     },
                     {
                       name: 'Title',
-                      value: 'title',
+                      value: 'Measure name',
                       direction: 'asc',
                     },
                   ]}
@@ -120,7 +131,7 @@ const Search = (props) => {
                 filterType="any"
                 isFilterable={true}
               />
-              <Facet field="Country" label="Country" view={SingleSelectFacet} />
+              {/* <Facet field="Country" label="Country" view={SingleSelectFacet} /> */}
               <Facet
                 field="Sector"
                 label="Sector"
@@ -175,18 +186,14 @@ const Search = (props) => {
                 filterType="any"
                 isFilterable={false}
               />
-              {/* <Facet */}
-              {/*   field="world_heritage_site" */}
-              {/*   label="World Heritage Site?" */}
-              {/* /> */}
-              {/* <Facet field="visitors" label="Visitors" filterType="any" /> */}
             </div>
           }
           bodyContent={
             <Results
-              titleField="Country"
+              titleField="Measure name"
               urlField="CodeCatalogue"
               shouldTrackClickThrough={true}
+              resultView={(props) => <Result {...props} view={Item} />}
             />
           }
           bodyHeader={
