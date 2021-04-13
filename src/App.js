@@ -67,12 +67,7 @@ export default function App() {
   }, []);
   return (
     <SearchProvider config={config}>
-      <WithSearch
-        mapContextToProps={(context) => {
-          console.log('context', context);
-          return context;
-        }}
-      >
+      <WithSearch mapContextToProps={(context) => context}>
         {(params) => <Search {...params} />}
       </WithSearch>
     </SearchProvider>
@@ -188,14 +183,11 @@ const Search = (props) => {
             </div>
           }
           bodyContent={
-            <div>
-              Body
-              <Results
-                titleField="Country"
-                urlField="CodeCatalogue"
-                shouldTrackClickThrough={true}
-              />
-            </div>
+            <Results
+              titleField="Country"
+              urlField="CodeCatalogue"
+              shouldTrackClickThrough={true}
+            />
           }
           bodyHeader={
             <React.Fragment>
