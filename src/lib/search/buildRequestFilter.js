@@ -67,13 +67,13 @@ export default function buildRequestFilter(filters) {
   if (!filters) return;
 
   filters = filters.reduce((acc, filter) => {
-    if (['states', 'world_heritage_site'].includes(filter.field)) {
-      return [...acc, getTermFilter(filter)];
-    }
-
-    if (['acres', 'visitors'].includes(filter.field)) {
-      return [...acc, getRangeFilter(filter)];
-    }
+    // if (['states', 'world_heritage_site'].includes(filter.field)) {
+    //   return [...acc, getTermFilter(filter)];
+    // }
+    //
+    // if (['acres', 'visitors'].includes(filter.field)) {
+    //   return [...acc, getRangeFilter(filter)];
+    // }
 
     return acc;
   }, []);

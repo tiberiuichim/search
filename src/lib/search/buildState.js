@@ -7,7 +7,7 @@ function buildTotalPages(resultsPerPage, totalResults) {
 }
 
 function buildTotalResults(hits) {
-  return hits.total.value;
+  return hits.total;
 }
 
 function getHighlight(hit, fieldName) {
@@ -15,6 +15,7 @@ function getHighlight(hit, fieldName) {
     window.hit = hit;
     window.fieldName = fieldName;
   }
+
   if (
     !hit.highlight ||
     !hit.highlight[fieldName] ||
@@ -37,12 +38,19 @@ function buildResults(hits) {
   };
 
   return hits.map((record) => {
-    return Object.entries(record._source)
+    const rec = Object.entries(record._source)
       .map(([fieldName, fieldValue]) => [
         fieldName,
         toObject(fieldValue, getHighlight(record, fieldName)),
       ])
       .reduce(addEachKeyValueToObject, {});
+
+    if (!Object.keys(rec).includes('id')) {
+      rec.id = { raw: record._id }; // TODO: make sure to have ids
+    }
+    rec._original = record;
+
+    return rec;
   });
 }
 
@@ -60,12 +68,12 @@ function buildResults(hits) {
   We do similar things for facets and totals.
 */
 export default function buildState(response, resultsPerPage) {
-  console.log('response', response);
-
   const results = buildResults(response.hits.hits);
   const totalResults = buildTotalResults(response.hits);
   const totalPages = buildTotalPages(resultsPerPage, totalResults);
   const facets = buildStateFacets(response.aggregations);
+
+  // console.log('response', results);
 
   return {
     results,
