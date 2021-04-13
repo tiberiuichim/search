@@ -35,7 +35,7 @@ const Item = (props) => {
 };
 
 export default function App() {
-  const appName = 'default';
+  const appName = 'wise';
 
   const appConfig = React.useMemo(() => {
     return config.searchui[appName].get();

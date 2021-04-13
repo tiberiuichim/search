@@ -53,6 +53,17 @@ const config = {
         return this.config;
       },
     },
+    wise: {
+      config: {
+        facets: [],
+      },
+      get() {
+        return {
+          ...config.searchui.default.config,
+          ...this.config,
+        };
+      },
+    },
   },
 };
 
