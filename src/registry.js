@@ -4,8 +4,73 @@ import {
   applyDisjunctiveFaceting,
   buildState,
 } from './lib/search';
+import { Facet } from '@elastic/react-search-ui';
+import { simpleFacet } from '@eeacms/search/components/factories';
+import { SimpleResult } from '@eeacms/search/components';
+
+const wise_config = {
+  facets: [
+    simpleFacet({ field: 'Country', isFilterable: true }),
+    simpleFacet({ field: 'Sector' }),
+    simpleFacet({ field: 'Use_or_activity', label: 'Use or activity' }),
+    simpleFacet({ field: 'Status' }),
+    simpleFacet({
+      field: 'Origin_of_the_measure',
+      label: 'Origin of the measure',
+    }),
+    simpleFacet({
+      field: 'Nature_of_the_measure',
+      label: 'Nature of the measure',
+    }),
+    simpleFacet({ field: 'Water_body_category', label: 'Water body category' }),
+    simpleFacet({ field: 'Spatial_scope', label: 'Spatial scope' }),
+    simpleFacet({ field: 'Measure_Impacts_to', label: 'Measure impacts' }),
+    simpleFacet({ field: 'Descriptors' }),
+  ],
+  sortOptions: [
+    {
+      name: 'Relevance',
+      value: '',
+      direction: '',
+    },
+    {
+      name: 'Title',
+      value: 'Measure_name',
+      direction: 'asc',
+    },
+  ],
+  listingViews: [
+    {
+      title: 'Items',
+      icon: null,
+      component: SimpleResult,
+      params: {
+        titleField: 'Measure_name',
+        urlField: null,
+        summaryField: null,
+        extraFields: [
+          {
+            field: 'Origin_of_the_measure',
+            label: 'Origin of the measure',
+          },
+          {
+            field: 'Nature_of_the_measure',
+            label: 'Nature of the measure',
+          },
+          {
+            field: 'Spatial_scope',
+            label: 'Spatial scope',
+          },
+        ],
+      },
+    },
+  ],
+};
 
 const config = {
+  componentFactories: {
+    'searchui.Facet': Facet,
+  },
   searchui: {
     default: {
       config: {
@@ -38,7 +103,7 @@ const config = {
           const responseJsonWithDisjunctiveFacetCounts = await applyDisjunctiveFaceting(
             body,
             state,
-            ['Country'],
+            [],
           );
 
           const newState = buildState(
@@ -54,9 +119,7 @@ const config = {
       },
     },
     wise: {
-      config: {
-        facets: [],
-      },
+      config: wise_config,
       get() {
         return {
           ...config.searchui.default.config,

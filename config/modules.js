@@ -64,6 +64,8 @@ function getWebpackAliases(options = {}) {
   if (path.relative(paths.appPath, baseUrlResolved) === '') {
     return {
       src: paths.appSrc,
+      '@eeacms/search': paths.appSrc,
+      ...options.paths,
     };
   }
 }
@@ -121,12 +123,13 @@ function getModules() {
 
   const additionalModulePaths = getAdditionalModulePaths(options);
 
-  return {
+  const ret = {
     additionalModulePaths: additionalModulePaths,
     webpackAliases: getWebpackAliases(options),
     jestAliases: getJestAliases(options),
     hasTsConfig,
   };
+  return ret;
 }
 
 module.exports = getModules();
