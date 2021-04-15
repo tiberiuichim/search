@@ -351,6 +351,7 @@ module.exports = function (webpackEnv) {
         new ModuleScopePlugin(paths.appSrc, [
           paths.appPackageJson,
           reactRefreshOverlayEntry,
+          path.join(paths.appPath, './theme/theme.config'),
         ]),
       ],
     },

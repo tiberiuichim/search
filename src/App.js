@@ -17,7 +17,7 @@ import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import config from './registry';
 import { AppConfigContext } from './lib/hocs';
 import { Facets } from './components';
-import 'semantic-ui-less/semantic.less';
+import './semantic-ui.less';
 // import 'semantic-ui-css/semantic.min.css';
 
 export default function App() {
