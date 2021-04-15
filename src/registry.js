@@ -43,7 +43,7 @@ const wise_config = {
     {
       title: 'Items',
       icon: null,
-      component: SimpleResult,
+      itemComponent: SimpleResult,
       params: {
         titleField: 'Measure_name',
         urlField: null,
@@ -129,5 +129,9 @@ const config = {
     },
   },
 };
+
+if (window) {
+  window.searchUiConfig = config;
+}
 
 export default config;

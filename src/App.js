@@ -17,7 +17,7 @@ import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import config from './registry';
 import { AppConfigContext } from './lib/hocs';
 import { Facets } from './components';
-import './search.css';
+import './search.less';
 
 export default function App() {
   const appName = 'wise';
@@ -46,7 +46,7 @@ const Search = (props) => {
 
   const { sortOptions, listingViews } = appConfig;
   const view = listingViews[0];
-  const Item = view.component;
+  const Item = view.itemComponent;
   const itemViewProps = view.params;
 
   return (
