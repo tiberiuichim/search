@@ -112,9 +112,6 @@ module.exports = function (webpackEnv) {
         loader: require.resolve('css-loader'),
         options: cssOptions,
       },
-      isLess && {
-        loader: require.resolve('less-loader'),
-      },
       {
         // Options for PostCSS as we reference these options twice
         // Adds vendor prefixing based on your specified browser support in
@@ -140,8 +137,11 @@ module.exports = function (webpackEnv) {
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
       },
+      isLess && {
+        loader: require.resolve('less-loader'),
+      },
     ].filter(Boolean);
-    if (preProcessor) {
+    if (preProcessor && !isLess) {
       loaders.push(
         {
           loader: require.resolve('resolve-url-loader'),
@@ -503,19 +503,7 @@ module.exports = function (webpackEnv) {
             {
               test: lessRegex,
               exclude: lessModuleRegex,
-              use: getStyleLoaders(
-                {
-                  importLoaders: 1,
-                  sourceMap: isEnvProduction
-                    ? shouldUseSourceMap
-                    : isEnvDevelopment,
-                  modules: {
-                    getLocalIdent: getCSSModuleLocalIdent,
-                  },
-                },
-                false,
-                true,
-              ),
+              use: getStyleLoaders({}, false, true),
             },
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
@@ -566,7 +554,14 @@ module.exports = function (webpackEnv) {
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+              exclude: [
+                /\.(js|mjs|jsx|ts|tsx)$/,
+                /\.html$/,
+                /\.json$/,
+                /theme.config$/,
+                /\.variables$/,
+                /\.overrides$/,
+              ],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
               },

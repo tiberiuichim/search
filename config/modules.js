@@ -65,6 +65,11 @@ function getWebpackAliases(options = {}) {
     return {
       src: paths.appSrc,
       '@eeacms/search': paths.appSrc,
+      '../../theme.config': path.resolve(paths.appSrc, '../theme/theme.config'),
+      '../../theme.config$': path.resolve(
+        paths.appSrc,
+        '../theme/theme.config',
+      ),
       ...options.paths,
     };
   }
