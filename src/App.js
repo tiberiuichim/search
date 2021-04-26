@@ -12,19 +12,33 @@ import {
   Paging,
   Sorting,
 } from '@elastic/react-search-ui';
-import { Layout, SingleSelectFacet } from '@elastic/react-search-ui-views';
+import { Layout } from '@elastic/react-search-ui-views'; // SingleSelectFacet
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import config from './registry';
 import { AppConfigContext } from './lib/hocs';
 import { Facets } from './components';
 import './semantic-ui.less';
+import isFunction from 'lodash.isfunction';
+import cloneDeep from 'lodash.clonedeep';
 // import 'semantic-ui-css/semantic.min.css';
+
+function rebind(config) {
+  // rebinds functions to the "activated" config
+  return Object.assign(
+    {},
+    ...Object.keys(config).map((name) => ({
+      [name]: isFunction(config[name])
+        ? config[name].bind(config)
+        : config[name],
+    })),
+  );
+}
 
 export default function App() {
   const appName = 'wise';
 
   const appConfig = React.useMemo(() => {
-    return config.searchui[appName].get();
+    return rebind(cloneDeep(config.searchui[appName]));
   }, []);
 
   return (

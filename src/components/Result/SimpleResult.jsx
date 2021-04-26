@@ -21,22 +21,21 @@ const Header = (props) => {
       <Level>{link}</Level>
       <Modal open={showModal}>
         <Modal.Header>Details:</Modal.Header>
-        <Modal.Content>fadasdq</Modal.Content>
-        <Modal.Actions></Modal.Actions>
+        <Modal.Content>{JSON.stringify(props.result)}</Modal.Content>
+        <Modal.Actions>
+          <button onClick={() => setShowModal(false)}>Close</button>
+        </Modal.Actions>
       </Modal>
     </>
   );
 };
 
 const SimpleResult = (props) => {
-  const {
-    result,
-    titleField,
-    // urlField,
-    // summaryField,
-    extraFields = [],
-  } = props;
+  const { result, extraFields = [] } = props;
   // console.log('resprops', props);
+  // titleField,
+  // urlField,
+  // summaryField,
 
   return (
     <div className="simple-item">

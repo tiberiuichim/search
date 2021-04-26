@@ -40,7 +40,7 @@ function buildMatch(searchTerm) {
 
   We then do similar things for searchTerm, filters, sort, etc.
 */
-export default function buildRequest(state) {
+export default function buildRequest(state, config) {
   const {
     current,
     filters,
@@ -58,6 +58,16 @@ export default function buildRequest(state) {
 
   // console.log({ sort, match, size, from, filter, filters });
 
+  const facets = config.facets;
+  const aggregations = Object.assign(
+    {},
+    ...facets.map((facet) => ({
+      [facet.field]: {
+        terms: { field: facet.field },
+      },
+    })),
+  );
+  console.log('facets', { aggregations, facets });
   const body = {
     // Static query Configuration
     // --------------------------
@@ -71,34 +81,35 @@ export default function buildRequest(state) {
       },
     },
     //https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-source-filtering.html#search-request-source-filtering
-    _source: [
-      'id',
-      'CodeCatalogue',
-      'Sector',
-      'Use_or_activity',
-      'Measure_name',
-      'Status',
-      'Origin_of_the_measure',
-      'Nature_of_the_measure',
-      'Water_body_category',
-      'Spatial_scope',
-      'Country',
-      'Measure_Impacts_to',
-      'Measure_Impacts_to__further_details_',
-      'Descriptors',
-    ],
+    // _source: [
+    //   // 'id',
+    //   // 'CodeCatalogue',
+    //   // 'Sector',
+    //   // 'Use_or_activity',
+    //   // 'Measure_name',
+    //   // 'Status',
+    //   // 'Origin_of_the_measure',
+    //   // 'Nature_of_the_measure',
+    //   // 'Water_body_category',
+    //   // 'Spatial_scope',
+    //   // 'Country',
+    //   // 'Measure_Impacts_to',
+    //   // 'Measure_Impacts_to__further_details_',
+    //   // 'Descriptors',
+    // ],
 
     aggs: {
-      Country: { terms: { field: 'Country' } },
-      Sector: { terms: { field: 'Sector' } },
-      Use_or_activity: { terms: { field: 'Use_or_activity' } },
-      Status: { terms: { field: 'Status' } },
-      Origin_of_the_measure: { terms: { field: 'Origin_of_the_measure' } },
-      Nature_of_the_measure: { terms: { field: 'Nature_of_the_measure' } },
-      Water_body_category: { terms: { field: 'Water_body_category' } },
-      Spatial_scope: { terms: { field: 'Spatial_scope' } },
-      Measure_Impacts_to: { terms: { field: 'Measure_Impacts_to' } },
-      Descriptors: { terms: { field: 'Descriptors' } },
+      ...aggregations,
+      // Country: { terms: { field: 'Country' } },
+      // Sector: { terms: { field: 'Sector' } },
+      // Use_or_activity: { terms: { field: 'Use_or_activity' } },
+      // Status: { terms: { field: 'Status' } },
+      // Origin_of_the_measure: { terms: { field: 'Origin_of_the_measure' } },
+      // Nature_of_the_measure: { terms: { field: 'Nature_of_the_measure' } },
+      // Water_body_category: { terms: { field: 'Water_body_category' } },
+      // Spatial_scope: { terms: { field: 'Spatial_scope' } },
+      // Measure_Impacts_to: { terms: { field: 'Measure_Impacts_to' } },
+      // Descriptors: { terms: { field: 'Descriptors' } },
 
       // states: { terms: { field: 'states.keyword', size: 30 } },
       // world_heritage_site: {
